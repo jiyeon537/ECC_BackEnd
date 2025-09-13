@@ -568,3 +568,288 @@ Date:   Sat Sep 13 16:42:19 2025 +0900
 
     R5
 
+
+#3
+#서로 다른 파일 병합하기
+user@jiyeon537 MINGW64 /c/manual-2
+$ git init
+Initialized empty Git repository in C:/manual-2/.git/
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git add work.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git commit -m "work 1"
+[main (root-commit) adc3f25] work 1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 work.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git branch o2
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git add main.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git commit -m "main work 2"
+[main 2e2122a] main work 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 main.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git switch o2
+Switched to branch 'o2'
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git add o2.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git commit -m "02 work 2"
+[o2 25f39bf] 02 work 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 o2.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git log --oneline --branches --graph
+* 25f39bf (HEAD -> o2) 02 work 2
+| * 2e2122a (main) main work 2
+|/  
+* adc3f25 work 1
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git merge o2
+Merge made by the 'ort' strategy.
+ o2.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 o2.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git log --oneline --branches --graph
+*   2970142 (HEAD -> main) Merge branch 'o2'
+|\
+| * 25f39bf (o2) 02 work 2
+* | 2e2122a main work 2
+|/
+* adc3f25 work 1
+
+
+
+
+
+#서로 다른 브랜치에서 한 문서의 다른 부분을 수정했을 때 병합하기
+user@jiyeon537 MINGW64 /c/manual-3
+$ git init
+Initialized empty Git repository in C:/manual-3/.git/
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git add work.txt
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git commit -m "work 1"
+[main (root-commit) f5a0ce6] work 1
+ 1 file changed, 6 insertions(+)
+ create mode 100644 work.txt
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git branch o2
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git commit -am "main work 2"
+[main df725bd] main work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git switch o2
+Switched to branch 'o2'
+
+user@jiyeon537 MINGW64 /c/manual-3 (o2)
+$ git commit -am "o2 work 2"
+[o2 e1acb36] o2 work 2
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-3 (o2)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git merge o2
+Auto-merging work.txt
+Merge made by the 'ort' strategy.
+ work.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+
+
+
+#서로 다른 브랜치에서 한 문서의 같은 부분을 수정했을 때 병합하기
+user@jiyeon537 MINGW64 /c/manual-4
+$ git init
+Initialized empty Git repository in C:/manual-4/.git/
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git add work.txt
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git commit -m "work 1"
+[main (root-commit) c72230e] work 1
+ 1 file changed, 5 insertions(+)
+ create mode 100644 work.txt
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git branch o2
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git commit -am "main work 2"
+[main 682329d] main work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git switch o2
+Switched to branch 'o2'
+
+user@jiyeon537 MINGW64 /c/manual-4 (o2)
+$ git commit -am "o2 work 2"
+[o2 913485b] o2 work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-4 (o2)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git merge o2
+Auto-merging work.txt
+CONFLICT (content): Merge conflict in work.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+user@jiyeon537 MINGW64 /c/manual-4 (main|MERGING)
+$ git commit -am "merge o2 branch" 
+[main 2ef6373] merge o2 branch
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git log --oneline --branches --graph
+*   2ef6373 (HEAD -> main) merge o2 branch
+|\
+| * 913485b (o2) o2 work 2
+* | 682329d main work 2
+|/
+* c72230e work 1
+
+
+
+#병합이 끝난 브랜치 삭제하기
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git branch
+* main
+  o2
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git branch -d o2
+Deleted branch o2 (was 913485b).
+
+
+
+#cherry-pick으로 병합하기
+user@jiyeon537 MINGW64 /c/cherry-pick
+$ git init
+Initialized empty Git repository in C:/cherry-pick/.git/
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git add init.txt; git commit -m "init
+> "
+[main (root-commit) 22f7c07] init
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 init.txt
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git branch topic
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git log --oneline --all --graph
+* 22f7c07 (HEAD -> main, topic) init
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ touch m1; git add m1; git commit -m "m1"
+[main bdd242e] m1
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 m1
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ touch m2; git add m2; git commit -m "m2"
+[main 8e6c807] m2
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 m2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git log --oneline --all --graph
+* 8e6c807 (HEAD -> main) m2
+* bdd242e m1
+* 22f7c07 (topic) init
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git switch topic
+Switched to branch 'topic'
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ touch t1; git add t1; git commit -m "t1"
+[topic f52dab3] t1
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t1
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ touch t2; git add t2; git commit -m "t2"
+[topic 3f46ef2] t2
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ touch t3; git add t3; git commit -m "t3"
+[topic e526e91] t3
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t3
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ git log --oneline --all --graph
+* e526e91 (HEAD -> topic) t3
+* 3f46ef2 t2
+* f52dab3 t1
+| * 8e6c807 (main) m2
+| * bdd242e m1
+|/
+* 22f7c07 init
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic|CHERRY-PICKING)
+$ git cherry-pick --quit
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git cherry-pick 3f46ef2
+[main 814a9cd] t2
+ Date: Sat Sep 13 18:53:01 2025 +0900
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ ls
+init.txt  m1  m2  t2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git log --oneline --all --graph
+* 814a9cd (HEAD -> main) t2
+* 8e6c807 m2
+* bdd242e m1
+| * e526e91 (topic) t3
+| * 3f46ef2 t2
+| * f52dab3 t1
+|/  
+* 22f7c07 init
+
+
+
