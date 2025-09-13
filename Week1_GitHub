@@ -1,0 +1,855 @@
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+
+No commits yet
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        hello.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -m "message1"
+On branch main
+
+Initial commit
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        hello.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git add hello.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+        new file:   hello.txt
+
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -m "message1"
+[main (root-commit) 9044e01] message1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hello.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+nothing to commit, working tree clean
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit 9044e01c2997985eeaf89503540bbf49642bc210 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:08:26 2025 +0900
+
+    message1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "message2"
+On branch main
+nothing to commit, working tree clean
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "message2"
+[main 6b9c569] message2
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit 6b9c569fa79cfc73dfdf1ff50e29191791a43ad3 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:10:39 2025 +0900
+
+    message2
+
+commit 9044e01c2997985eeaf89503540bbf49642bc210
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:08:26 2025 +0900
+
+    message1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git diff
+diff --git a/hello.txt b/hello.txt
+index 7a754f4..669742f 100644
+--- a/hello.txt
++++ b/hello.txt
+@@ -1,2 +1,2 @@
+ 1
+-2
+\ No newline at end of file
++two
+\ No newline at end of file
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git add .
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   hello.txt
+        new file:   hello2.txt
+
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -m "message3"
+[main 98eb19c] message3
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+ create mode 100644 hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit 98eb19c501d506541d79289a668f740bc1c8913f (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:15:46 2025 +0900
+
+    message3
+
+commit 6b9c569fa79cfc73dfdf1ff50e29191791a43ad3
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:10:39 2025 +0900
+
+    message2
+
+commit 9044e01c2997985eeaf89503540bbf49642bc210
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:08:26 2025 +0900
+
+    message1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ gir log --stat
+bash: gir: command not found
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log --stat
+commit 98eb19c501d506541d79289a668f740bc1c8913f (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:15:46 2025 +0900
+
+    message3
+
+ hello.txt  | 3 ++-
+ hello2.txt | 4 ++++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
+
+commit 6b9c569fa79cfc73dfdf1ff50e29191791a43ad3
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:10:39 2025 +0900
+
+    message2
+
+ hello.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+commit 9044e01c2997985eeaf89503540bbf49642bc210
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:08:26 2025 +0900
+
+    message1
+
+ hello.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ ls -la
+total 22
+drwxr-xr-x 1 user 197121  0  9월 13 16:14 ./
+drwxr-xr-x 1 user 197121  0  9월 13 15:29 ../
+drwxr-xr-x 1 user 197121  0  9월 13 16:15 .git/
+-rw-r--r-- 1 user 197121  7  9월 13 16:13 hello.txt
+-rw-r--r-- 1 user 197121 10  9월 13 16:14 hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+nothing to commit, working tree clean
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git add hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   hello2.txt
+
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -m "delete b, c, d"
+[main 396ce19] delete b, c, d
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+nothing to commit, working tree clean
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit ---amend
+error: unknown option `-amend'
+usage: git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]
+                  [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]
+                  [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
+                  [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
+                  [--date=<date>] [--cleanup=<mode>] [--[no-]status]
+                  [-i | -o] [--pathspec-from-file=<file> [--pathspec-file-nul]]
+                  [(--trailer <token>[(=|:)<value>])...] [-S[<keyid>]]
+                  [--] [<pathspec>...]
+
+    -q, --[no-]quiet      suppress summary after successful commit
+    -v, --[no-]verbose    show diff in commit message template
+
+Commit message options
+    -F, --[no-]file <file>
+                          read message from file
+    --[no-]author <author>
+                          override author for commit
+    --[no-]date <date>    override date for commit
+    -m, --[no-]message <message>
+                          commit message
+    -c, --[no-]reedit-message <commit>
+                          reuse and edit message from specified commit
+    -C, --[no-]reuse-message <commit>
+                          reuse message from specified commit
+    --[no-]fixup [(amend|reword):]commit
+                          use autosquash formatted message to fixup or amend/reword specified commit
+    --[no-]squash <commit>
+                          use autosquash formatted message to squash specified commit
+    --[no-]reset-author   the commit is authored by me now (used with -C/-c/--amend)
+    --trailer <trailer>   add custom trailer(s)
+    -s, --[no-]signoff    add a Signed-off-by trailer
+    -t, --[no-]template <file>
+                          use specified template file
+    -e, --[no-]edit       force edit of commit
+    --[no-]cleanup <mode> how to strip spaces and #comments from message
+    --[no-]status         include status in commit message template
+    -S, --[no-]gpg-sign[=<key-id>]
+                          GPG sign commit
+
+Commit contents options
+    -a, --[no-]all        commit all changed files
+    -i, --[no-]include    add specified files to index for commit
+    --[no-]interactive    interactively add files
+    -p, --[no-]patch      interactively add changes
+    -U, --unified <n>     generate diffs with <n> lines context
+    --inter-hunk-context <n>
+                          show context between diff hunks up to the specified number of lines
+    -o, --[no-]only       commit only specified files
+    -n, --no-verify       bypass pre-commit and commit-msg hooks
+    --verify              opposite of --no-verify
+    --[no-]dry-run        show what would be committed
+    --[no-]short          show status concisely
+    --[no-]branch         show branch information
+    --[no-]ahead-behind   compute full ahead/behind values
+    --[no-]porcelain      machine-readable output
+    --[no-]long           show status in long format (default)
+    -z, --[no-]null       terminate entries with NUL
+    --[no-]amend          amend previous commit
+    --no-post-rewrite     bypass post-rewrite hook
+    --post-rewrite        opposite of --no-post-rewrite
+    -u, --[no-]untracked-files[=<mode>]
+                          show untracked files, optional modes: all, normal, no. (Default: all)
+    --[no-]pathspec-from-file <file>
+                          read pathspec from file
+    --[no-]pathspec-file-nul
+                          with --pathspec-from-file, pathspec elements are separated with NUL character
+
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit --amend
+[main 784d015] delete b, c, d
+ Date: Sat Sep 13 16:21:05 2025 +0900
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git restore hello.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git add hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        modified:   hello2.txt
+
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git restore --staged hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "message4"
+[main f470296] message4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   hello2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "message4"
+[main f470296] message4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "message4"
+[main f470296] message4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit f47029628658addc23a7b4ce9b2b42cfff04d5c6 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:26:51 2025 +0900
+
+    message4
+
+commit 784d015c5033c0075aab586bca29561a9be81b72
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:21:05 2025 +0900
+
+    delete b, c, d
+
+commit 98eb19c501d506541d79289a668f740bc1c8913f
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:15:46 2025 +0900
+
+    message3
+
+commit 6b9c569fa79cfc73dfdf1ff50e29191791a43ad3
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:10:39 2025 +0900
+
+    message2
+
+commit 9044e01c2997985eeaf89503540bbf49642bc210
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:08:26 2025 +0900
+
+    message1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git reset HEAD^
+Unstaged changes after reset:
+M       hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git lof
+git: 'lof' is not a git command. See 'git --help'.
+
+The most similar command is
+        log
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit 784d015c5033c0075aab586bca29561a9be81b72 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:21:05 2025 +0900
+
+    delete b, c, d
+
+commit 98eb19c501d506541d79289a668f740bc1c8913f
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:15:46 2025 +0900
+
+    message3
+
+commit 6b9c569fa79cfc73dfdf1ff50e29191791a43ad3
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:10:39 2025 +0900
+
+    message2
+
+commit 9044e01c2997985eeaf89503540bbf49642bc210
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:08:26 2025 +0900
+
+    message1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git restore hello2.tt
+error: pathspec 'hello2.tt' did not match any file(s) known to git
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git restore hello2.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git add rev.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -m "R1"
+[main 4a2359e] R1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 rev.txt
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "R2"
+[main 063a5fb] R2
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "R3"
+[main e461cf3] R3
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "R4"
+[main b354a10] R4
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit b354a10a7870c435a41aac8dcef7a263805404f5 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:31:17 2025 +0900
+
+    R4
+
+commit e461cf31e65825b55b3c27ca5f6542732ee04e05
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:30:59 2025 +0900
+
+    R3
+
+commit 063a5fb2a943755f092f079939f4d3f54e63eb04
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:30:31 2025 +0900
+
+    R2
+
+commit 4a2359ef1b4324ac04bf803d51bf452bf39084b3
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:29:59 2025 +0900
+
+    R1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git reset --hard 063a5fb2a943755f092f079939f4d3f54e63eb04
+HEAD is now at 063a5fb R2
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit 063a5fb2a943755f092f079939f4d3f54e63eb04 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:30:31 2025 +0900
+
+    R2
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git commit -am "R5"
+[main f5d445a] R5
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit f5d445aafa6c8907175f51b7c7583d92141345a2 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:42:19 2025 +0900
+
+    R5
+
+commit 063a5fb2a943755f092f079939f4d3f54e63eb04
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:30:31 2025 +0900
+
+    R2
+
+commit 4a2359ef1b4324ac04bf803d51bf452bf39084b3
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:29:59 2025 +0900
+
+    R1
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git revert f5d445aafa6c8907175f51b7c7583d92141345a2
+[main 50da50c] Revert "R5"
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+user@jiyeon537 MINGW64 /c/hello-git (main)
+$ git log
+commit 50da50cfb39c91ff4c217cc542a84dcb3043c64a (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:44:42 2025 +0900
+
+    Revert "R5"
+
+    This reverts commit f5d445aafa6c8907175f51b7c7583d92141345a2.
+
+commit f5d445aafa6c8907175f51b7c7583d92141345a2
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 13 16:42:19 2025 +0900
+
+    R5
+
+
+#3
+#서로 다른 파일 병합하기
+user@jiyeon537 MINGW64 /c/manual-2
+$ git init
+Initialized empty Git repository in C:/manual-2/.git/
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git add work.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git commit -m "work 1"
+[main (root-commit) adc3f25] work 1
+ 1 file changed, 1 insertion(+)
+ create mode 100644 work.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git branch o2
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git add main.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git commit -m "main work 2"
+[main 2e2122a] main work 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 main.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git switch o2
+Switched to branch 'o2'
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git add o2.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git commit -m "02 work 2"
+[o2 25f39bf] 02 work 2
+ 1 file changed, 1 insertion(+)
+ create mode 100644 o2.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git log --oneline --branches --graph
+* 25f39bf (HEAD -> o2) 02 work 2
+| * 2e2122a (main) main work 2
+|/  
+* adc3f25 work 1
+
+user@jiyeon537 MINGW64 /c/manual-2 (o2)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git merge o2
+Merge made by the 'ort' strategy.
+ o2.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 o2.txt
+
+user@jiyeon537 MINGW64 /c/manual-2 (main)
+$ git log --oneline --branches --graph
+*   2970142 (HEAD -> main) Merge branch 'o2'
+|\
+| * 25f39bf (o2) 02 work 2
+* | 2e2122a main work 2
+|/
+* adc3f25 work 1
+
+
+
+
+
+#서로 다른 브랜치에서 한 문서의 다른 부분을 수정했을 때 병합하기
+user@jiyeon537 MINGW64 /c/manual-3
+$ git init
+Initialized empty Git repository in C:/manual-3/.git/
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git add work.txt
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git commit -m "work 1"
+[main (root-commit) f5a0ce6] work 1
+ 1 file changed, 6 insertions(+)
+ create mode 100644 work.txt
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git branch o2
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git commit -am "main work 2"
+[main df725bd] main work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git switch o2
+Switched to branch 'o2'
+
+user@jiyeon537 MINGW64 /c/manual-3 (o2)
+$ git commit -am "o2 work 2"
+[o2 e1acb36] o2 work 2
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-3 (o2)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/manual-3 (main)
+$ git merge o2
+Auto-merging work.txt
+Merge made by the 'ort' strategy.
+ work.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+
+
+
+#서로 다른 브랜치에서 한 문서의 같은 부분을 수정했을 때 병합하기
+user@jiyeon537 MINGW64 /c/manual-4
+$ git init
+Initialized empty Git repository in C:/manual-4/.git/
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git add work.txt
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git commit -m "work 1"
+[main (root-commit) c72230e] work 1
+ 1 file changed, 5 insertions(+)
+ create mode 100644 work.txt
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git branch o2
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git commit -am "main work 2"
+[main 682329d] main work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git switch o2
+Switched to branch 'o2'
+
+user@jiyeon537 MINGW64 /c/manual-4 (o2)
+$ git commit -am "o2 work 2"
+[o2 913485b] o2 work 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/manual-4 (o2)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git merge o2
+Auto-merging work.txt
+CONFLICT (content): Merge conflict in work.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+user@jiyeon537 MINGW64 /c/manual-4 (main|MERGING)
+$ git commit -am "merge o2 branch" 
+[main 2ef6373] merge o2 branch
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git log --oneline --branches --graph
+*   2ef6373 (HEAD -> main) merge o2 branch
+|\
+| * 913485b (o2) o2 work 2
+* | 682329d main work 2
+|/
+* c72230e work 1
+
+
+
+#병합이 끝난 브랜치 삭제하기
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git branch
+* main
+  o2
+
+user@jiyeon537 MINGW64 /c/manual-4 (main)
+$ git branch -d o2
+Deleted branch o2 (was 913485b).
+
+
+
+#cherry-pick으로 병합하기
+user@jiyeon537 MINGW64 /c/cherry-pick
+$ git init
+Initialized empty Git repository in C:/cherry-pick/.git/
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git add init.txt; git commit -m "init
+> "
+[main (root-commit) 22f7c07] init
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 init.txt
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git branch topic
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git log --oneline --all --graph
+* 22f7c07 (HEAD -> main, topic) init
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ touch m1; git add m1; git commit -m "m1"
+[main bdd242e] m1
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 m1
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ touch m2; git add m2; git commit -m "m2"
+[main 8e6c807] m2
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 m2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git log --oneline --all --graph
+* 8e6c807 (HEAD -> main) m2
+* bdd242e m1
+* 22f7c07 (topic) init
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git switch topic
+Switched to branch 'topic'
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ touch t1; git add t1; git commit -m "t1"
+[topic f52dab3] t1
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t1
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ touch t2; git add t2; git commit -m "t2"
+[topic 3f46ef2] t2
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ touch t3; git add t3; git commit -m "t3"
+[topic e526e91] t3
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t3
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ git log --oneline --all --graph
+* e526e91 (HEAD -> topic) t3
+* 3f46ef2 t2
+* f52dab3 t1
+| * 8e6c807 (main) m2
+| * bdd242e m1
+|/
+* 22f7c07 init
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic|CHERRY-PICKING)
+$ git cherry-pick --quit
+
+user@jiyeon537 MINGW64 /c/cherry-pick (topic)
+$ git switch main
+Switched to branch 'main'
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git cherry-pick 3f46ef2
+[main 814a9cd] t2
+ Date: Sat Sep 13 18:53:01 2025 +0900
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 t2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ ls
+init.txt  m1  m2  t2
+
+user@jiyeon537 MINGW64 /c/cherry-pick (main)
+$ git log --oneline --all --graph
+* 814a9cd (HEAD -> main) t2
+* 8e6c807 m2
+* bdd242e m1
+| * e526e91 (topic) t3
+| * 3f46ef2 t2
+| * f52dab3 t1
+|/  
+* 22f7c07 init
+
+
+
