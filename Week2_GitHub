@@ -286,3 +286,48 @@ af409ec add c
 925d378 Create f2.txt
 c2b024c Create f2
 456f0f2 Create f1.txt
+
+
+#7장
+user@jiyeon537 MINGW64 /c/test-3 (main)
+$ git log
+commit 17fb263d343a97f81507b83e9b981dddb72542a9 (HEAD -> main)      
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 20 01:01:42 2025 +0900
+
+    work1.txt 파일 생성
+
+user@jiyeon537 MINGW64 /c/test-3 (main)       
+$ git log
+commit e0e4a8a1da17a479e2cadb01fdbc26656aedaa10 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>  
+Date:   Sat Sep 20 01:11:17 2025 +0900        
+
+    work2.txt, work3.txt 생성
+
+commit 17fb263d343a97f81507b83e9b981dddb72542a9
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>  
+Date:   Sat Sep 20 01:01:42 2025 +0900        
+
+    work1.txt 파일 생성
+
+user@jiyeon537 MINGW64 /c/test-3 (main)
+$ git remote -v
+test-3  https://github.com/jiyeon537/test-3.git (fetch)
+test-3  https://github.com/jiyeon537/test-3.git (push)
+
+user@jiyeon537 MINGW64 /c/test-3 (main)
+$ git log
+commit e0e4a8a1da17a479e2cadb01fdbc26656aedaa10 (HEAD -> main)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 20 01:11:17 2025 +0900
+
+    work2.txt, work3.txt 생성
+
+commit 17fb263d343a97f81507b83e9b981dddb72542a9
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Sat Sep 20 01:01:42 2025 +0900
+
+    work1.txt 파일 생성
+
+
