@@ -1,0 +1,288 @@
+#git_home
+user@jiyeon537 MINGW64 /c/git_home
+$ git clone https://github.com/jiyeon537/test-1.git .
+Cloning into '.'...
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 10 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (10/10), done.
+Resolving deltas: 100% (2/2), done.
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git log
+commit 7cc1db782073d5059ef3908f70e37cb260fbe97b (HEAD -> main, origin/main, origin/HEAD)
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:10:56 2025 +0900
+
+    Delete f2
+
+commit 925d3780a3405240b893535ccfe80c73e1f1a780
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:08:56 2025 +0900
+
+    Create f2.txt
+
+commit c2b024ccfbbf7c862ac099d88f57605018a41cb3
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:07:23 2025 +0900
+
+    Create f2
+
+commit 456f0f26511abb5a7d015116064326cb50f4fd97
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:07:12 2025 +0900
+
+    Create f1.txt
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git commit -am "add c"
+[main af409ec] add c
+ 1 file changed, 1 insertion(+)
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 264 bytes | 37.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/jiyeon537/test-1.git
+   7cc1db7..af409ec  main -> main
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0 (from 0)
+Unpacking objects: 100% (3/3), 248 bytes | 20.00 KiB/s, done.
+From https://github.com/jiyeon537/test-1
+   af409ec..2c3a8f7  main       -> origin/main
+Updating af409ec..2c3a8f7
+Fast-forward
+ f1.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git log
+commit 2c3a8f745eaf87cac4cc557b3b3fe05e0eab1ff0 (HEAD -> main, origin/main, origin/HEAD)
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Fri Sep 19 12:58:49 2025 +0900
+
+    add d
+
+commit af409ecb3abb468b8e1a32fb02b53649819541cd
+Author: jiyeon537 <parkjiyeon537@ewha.ac,kr>
+Date:   Fri Sep 19 12:49:28 2025 +0900
+
+    add c
+
+commit 7cc1db782073d5059ef3908f70e37cb260fbe97b
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:10:56 2025 +0900
+
+    Delete f2
+
+commit 925d3780a3405240b893535ccfe80c73e1f1a780
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:08:56 2025 +0900
+
+    Create f2.txt
+
+commit c2b024ccfbbf7c862ac099d88f57605018a41cb3
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:07:23 2025 +0900
+
+    Create f2
+
+commit 456f0f26511abb5a7d015116064326cb50f4fd97
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:07:12 2025 +0900
+
+    Create f1.txt
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git add f3.txt
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git commit -m "create f3.txt"
+[main eecb801] create f3.txt
+ 1 file changed, 1 insertion(+)
+ create mode 100644 f3.txt
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git log --oneline
+eecb801 (HEAD -> main) create f3.txt
+2c3a8f7 (origin/main, origin/HEAD) add d
+af409ec add c
+7cc1db7 Delete f2
+925d378 Create f2.txt
+c2b024c Create f2
+456f0f2 Create f1.txt
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git push
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 293 bytes | 73.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/jiyeon537/test-1.git
+   2c3a8f7..eecb801  main -> main
+
+user@jiyeon537 MINGW64 /c/git_home (main)
+$ git log --oneline
+eecb801 (HEAD -> main, origin/main, origin/HEAD) create f3.txt
+2c3a8f7 add d
+af409ec add c
+7cc1db7 Delete f2
+925d378 Create f2.txt
+c2b024c Create f2
+456f0f2 Create f1.txt
+
+#git_home
+user@jiyeon537 MINGW64 /c/git_office
+$ git clone https://github.com/jiyeon537/test-1.git .
+Cloning into '.'...
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 10 (delta 2), reused 0 (delta 0), pack-reused 0 (from 0)
+Receiving objects: 100% (10/10), done.
+Resolving deltas: 100% (2/2), done.
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git log
+commit 7cc1db782073d5059ef3908f70e37cb260fbe97b (HEAD -> main, origin/main, origin/HEAD)
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:10:56 2025 +0900
+
+    Delete f2
+
+commit 925d3780a3405240b893535ccfe80c73e1f1a780
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:08:56 2025 +0900
+
+    Create f2.txt
+
+
+commit c2b024ccfbbf7c862ac099d88f57605018a41cb3
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:07:23 2025 +0900
+
+    Create f2
+
+commit 456f0f26511abb5a7d015116064326cb50f4fd97
+Author: jiyeon537 <parkjiyeon537@ewha.ac.kr>
+Date:   Fri Sep 19 12:07:12 2025 +0900
+
+    Create f1.txt
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git pull
+remote: Enumerating objects: 5, done.
+remote: Counting objects: 100% (5/5), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0 (from 0)     
+Unpacking objects: 100% (3/3), 244 bytes | 18.00 KiB/s, done.
+From https://github.com/jiyeon537/test-1
+   7cc1db7..af409ec  main       -> origin/main
+Updating 7cc1db7..af409ec
+Fast-forward
+ f1.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git commit -am "add d"
+[main 2c3a8f7] add d
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git pull
+Already up to date.
+
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Delta compression using up to 12 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 268 bytes | 268.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To https://github.com/jiyeon537/test-1.git
+   af409ec..2c3a8f7  main -> main
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git fetch
+remote: Enumerating objects: 4, done.
+remote: Counting objects: 100% (4/4), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0), pack-reused 0 (from 0)        
+Unpacking objects: 100% (3/3), 273 bytes | 9.00 KiB/s, done.
+From https://github.com/jiyeon537/test-1
+   2c3a8f7..eecb801  main       -> origin/main
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ ls -al
+total 22
+drwxr-xr-x 1 user 197121  0  9월 19 12:56 ./
+drwxr-xr-x 1 user 197121  0  9월 19 12:14 ../
+drwxr-xr-x 1 user 197121  0  9월 19 12:58 .git/
+-rw-r--r-- 1 user 197121 10  9월 19 12:58 f1.txt
+-rw-r--r-- 1 user 197121  3  9월 19 12:42 f2.txt
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git log --oneline
+2c3a8f7 (HEAD -> main) add d
+af409ec add c
+7cc1db7 Delete f2
+925d378 Create f2.txt
+c2b024c Create f2
+456f0f2 Create f1.txt
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git status
+On branch main
+Your branch is behind 'origin/main' by 1 commit, and can be fast-forwarded.  
+  (use "git pull" to update your local branch)
+
+nothing to commit, working tree clean
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git diff HEAD origin/main
+diff --git a/f3.txt b/f3.txt
+new file mode 100644
+index 0000000..2e65efe
+--- /dev/null
++++ b/f3.txt
+@@ -0,0 +1 @@
++a
+\ No newline at end of file
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git merge origin/main
+Updating 2c3a8f7..eecb801
+Fast-forward
+ f3.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 f3.txt
+
+user@jiyeon537 MINGW64 /c/git_office (main)
+$ git log --oneline
+eecb801 (HEAD -> main, origin/main, origin/HEAD) create f3.txt
+2c3a8f7 add d
+af409ec add c
+7cc1db7 Delete f2
+925d378 Create f2.txt
+c2b024c Create f2
+456f0f2 Create f1.txt
