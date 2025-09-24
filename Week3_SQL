@@ -1,0 +1,285 @@
+mysql> use sample;
+Database changed
+mysql> SELECT * FROM sample51;
++------+------+----------+
+| no   | name | quantity |
++------+------+----------+
+|    1 | A    |        1 |
+|    2 | A    |        2 |
+|    3 | B    |       10 |
+|    4 | C    |        3 |
+|    5 | NULL |     NULL |
++------+------+----------+
+5 rows in set (1.011 sec)
+
+mysql> SELECT COUNT(*) FROM sample51;
++----------+
+| COUNT(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.107 sec)
+
+mysql> SELECT * FROM sample51 WHERE name='A';
++------+------+----------+
+| no   | name | quantity |
++------+------+----------+
+|    1 | A    |        1 |
+|    2 | A    |        2 |
++------+------+----------+
+2 rows in set (0.351 sec)
+
+mysql> SELECT COUNT(*) FROM sample51 WHERE name='A';
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.012 sec)
+
+mysql> SELECT COUNT(no), COUNT(name) FROM sample51;
++-----------+-------------+
+| COUNT(no) | COUNT(name) |
++-----------+-------------+
+|         5 |           4 |
++-----------+-------------+
+1 row in set (0.012 sec)
+
+mysql> SELECT ALL name FROM sample51;
++------+
+| name |
++------+
+| A    |
+| A    |
+| B    |
+| C    |
+| NULL |
++------+
+5 rows in set (0.012 sec)
+
+mysql> SELECT DISTINCT name FROM sample51;
++------+
+| name |
++------+
+| A    |
+| B    |
+| C    |
+| NULL |
++------+
+4 rows in set (0.269 sec)
+
+mysql> SELECT COUNT(ALL name), COUNT(DISTINCT name) FROM sample51;
++-----------------+----------------------+
+| COUNT(ALL name) | COUNT(DISTINCT name) |
++-----------------+----------------------+
+|               4 |                    3 |
++-----------------+----------------------+
+1 row in set (0.034 sec)
+
+mysql> SELECT * FROM sample51;
++------+------+----------+
+| no   | name | quantity |
++------+------+----------+
+|    1 | A    |        1 |
+|    2 | A    |        2 |
+|    3 | B    |       10 |
+|    4 | C    |        3 |
+|    5 | NULL |     NULL |
++------+------+----------+
+5 rows in set (0.009 sec)
+
+mysql> SELECT SUM(quantity) FROM sample51;
++---------------+
+| SUM(quantity) |
++---------------+
+|            16 |
++---------------+
+1 row in set (0.010 sec)
+
+mysql> SELECT * FROM sample51;
++------+------+----------+
+| no   | name | quantity |
++------+------+----------+
+|    1 | A    |        1 |
+|    2 | A    |        2 |
+|    3 | B    |       10 |
+|    4 | C    |        3 |
+|    5 | NULL |     NULL |
++------+------+----------+
+5 rows in set (0.010 sec)
+
+mysql> SELECT AVG(quantity), SUM(quantity)/COUNT(quantity) FROM sample51;
++---------------+-------------------------------+
+| AVG(quantity) | SUM(quantity)/COUNT(quantity) |
++---------------+-------------------------------+
+|        4.0000 |                        4.0000 |
++---------------+-------------------------------+
+1 row in set (0.095 sec)
+
+mysql> SELECT AVG(CASE WHEN quantity IS NULL THEN 0 ELSE quantity END) AS avgnull0 FROM sample51;
++----------+
+| avgnull0 |
++----------+
+|   3.2000 |
++----------+
+1 row in set (0.093 sec)
+
+mysql> SELECT * FROM sample51;
++------+------+----------+
+| no   | name | quantity |
++------+------+----------+
+|    1 | A    |        1 |
+|    2 | A    |        2 |
+|    3 | B    |       10 |
+|    4 | C    |        3 |
+|    5 | NULL |     NULL |
++------+------+----------+
+5 rows in set (0.010 sec)
+
+mysql> SELECT MIN(quantity), MAX(quantity), MIN(name), MAX(name) FROM sample51;
++---------------+---------------+-----------+-----------+
+| MIN(quantity) | MAX(quantity) | MIN(name) | MAX(name) |
++---------------+---------------+-----------+-----------+
+|             1 |            10 | A         | C         |
++---------------+---------------+-----------+-----------+
+1 row in set (0.010 sec)
+
+mysql> SELECT * FROM sample51;
++------+------+----------+
+| no   | name | quantity |
++------+------+----------+
+|    1 | A    |        1 |
+|    2 | A    |        2 |
+|    3 | B    |       10 |
+|    4 | C    |        3 |
+|    5 | NULL |     NULL |
++------+------+----------+
+5 rows in set (0.009 sec)
+
+mysql> SELECT name FROM sample51 GROUP BY name;
++------+
+| name |
++------+
+| A    |
+| B    |
+| C    |
+| NULL |
++------+
+4 rows in set (0.013 sec)
+
+mysql> SELECT name, COUNT(name), SUM(quantity) FROM sample51 GROUP BY name;
++------+-------------+---------------+
+| name | COUNT(name) | SUM(quantity) |
++------+-------------+---------------+
+| A    |           2 |             3 |
+| B    |           1 |            10 |
+| C    |           1 |             3 |
+| NULL |           0 |          NULL |
++------+-------------+---------------+
+4 rows in set (0.008 sec)
+
+mysql> SELECT name, COUNT(name) FROM sample51 GROUP BY name;
++------+-------------+
+| name | COUNT(name) |
++------+-------------+
+| A    |           2 |
+| B    |           1 |
+| C    |           1 |
+| NULL |           0 |
++------+-------------+
+4 rows in set (0.015 sec)
+
+mysql> SELECT name, COUNT(name) FROM sample51 GROUP BY name HAVING COUNT(name) = 1;
++------+-------------+
+| name | COUNT(name) |
++------+-------------+
+| B    |           1 |
+| C    |           1 |
++------+-------------+
+2 rows in set (0.084 sec)
+
+mysql> SELECT name, COUNT(name), SUM(quantity) FROM sample51 GROUP BY name ORDER BY SUM(quantity) DESC;
++------+-------------+---------------+
+| name | COUNT(name) | SUM(quantity) |
++------+-------------+---------------+
+| B    |           1 |            10 |
+| A    |           2 |             3 |
+| C    |           1 |             3 |
+| NULL |           0 |          NULL |
++------+-------------+---------------+
+4 rows in set (0.185 sec)
+
+mysql> SELECT * FROM sample54;
++------+------+
+| no   | a    |
++------+------+
+|    1 |  100 |
+|    2 |  900 |
+|    3 |   20 |
+|    4 |   80 |
++------+------+
+4 rows in set (0.327 sec)
+
+mysql> SELECT MIN(a) FROM sample54;
++--------+
+| MIN(a) |
++--------+
+|     20 |
++--------+
+1 row in set (0.011 sec)
+
+mysql> DELETE FROM sample54 WHERE a=(SELECT a FROM (SELECT MIN(a) AS a FROM sample54) AS x); SELECT * FROM sample54;
+Query OK, 1 row affected (0.355 sec)
+
++------+------+
+| no   | a    |
++------+------+
+|    1 |  100 |
+|    2 |  900 |
+|    4 |   80 |
++------+------+
+3 rows in set (0.008 sec)
+
+mysql> SELECT
+    -> (SELECT COUNT(*) FROM sample51) AS sq1,
+    -> (SELECT COUNT(*) FROM sample54) AS sq2;
++------+------+
+| sq1  | sq2  |
++------+------+
+|    5 |    3 |
++------+------+
+1 row in set (0.144 sec)
+
+mysql> SELECT * FROM (SELECT * FROM sample54) sq;
++------+------+
+| no   | a    |
++------+------+
+|    1 |  100 |
+|    2 |  900 |
+|    4 |   80 |
++------+------+
+3 rows in set (0.011 sec)
+
+ ysql> SELECT * FROM (SELECT * FROM sample54) AS sq;
++------+------+
+| no   | a    |
++------+------+
+|    1 |  100 |
+|    2 |  900 |
+|    4 |   80 |
++------+------+
+3 rows in set (0.010 sec)
+
+mysql> INSERT INTO sample541 VALUES(
+    -> (SELECT COUNT(*) FROM sample51),
+    -> (SELECT COUNT(*) FROM sample54)
+    -> );
+Query OK, 1 row affected (0.410 sec)
+
+mysql> SELECT * FROM sample541;
++------+------+
+| a    | b    |
++------+------+
+|    5 |    3 |
++------+------+
+1 row in set (0.011 sec)
