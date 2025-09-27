@@ -352,3 +352,129 @@ mysql> SELECT * FROM sample551 WHERE no IN (SELECT no2 FROM sample552);
 |    5 | 있음   |
 +------+--------+
 2 rows in set (0.092 sec)
+
+mysql> CREATE TABLE sample62(
+    -> no INTEGER NOT NULL,
+    -> a VARCHAR(30),
+    -> b DATE);
+Query OK, 0 rows affected (1.376 sec)
+
+mysql> DESC sample62;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| no    | int         | NO   |     | NULL    |       |
+| a     | varchar(30) | YES  |     | NULL    |       |
+| b     | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.579 sec)
+
+mysql> ALTER TABLE sample62 ADD newcol INTEGER;
+Query OK, 0 rows affected (1.150 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC sample62;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| no     | int         | NO   |     | NULL    |       |
+| a      | varchar(30) | YES  |     | NULL    |       |
+| b      | date        | YES  |     | NULL    |       |
+| newcol | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.039 sec)
+
+mysql> ALTER TABLE sample62 MODIFY newcol VARCHAR(20);
+Query OK, 0 rows affected (0.929 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC sample62;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| no     | int         | NO   |     | NULL    |       |
+| a      | varchar(30) | YES  |     | NULL    |       |
+| b      | date        | YES  |     | NULL    |       |
+| newcol | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.029 sec)
+
+mysql> ALTER TABLE sample62 CHANGE newcol c VARCHAR(20);
+Query OK, 0 rows affected (0.346 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC sample62;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| no    | int         | NO   |     | NULL    |       |
+| a     | varchar(30) | YES  |     | NULL    |       |
+| b     | date        | YES  |     | NULL    |       |
+| c     | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.037 sec)
+
+mysql> ALTER TABLE sample62 DROP c;
+Query OK, 0 rows affected (0.902 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC sample62;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| no    | int         | NO   |     | NULL    |       |
+| a     | varchar(30) | YES  |     | NULL    |       |
+| b     | date        | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.040 sec)
+
+mysql> CREATE TABLE sample631(
+    -> a INTEGER NOT NULL,
+    -> b INTEGER NOT NULL UNIQUE,
+    -> c VARCHAR (30)
+    -> );
+Query OK, 0 rows affected (0.699 sec)
+
+mysql> CREATE TABLE sample632(
+    -> no INTEGER NOT NULL,
+    -> sub_no INTEGER NOT NULL,
+    -> name VARCHAR(30),
+    -> CONSTRAINT pkey_sample PRIMARY KEY (no, sub_no)
+    -> );
+Query OK, 0 rows affected (0.493 sec)
+
+mysql> CREATE TABLE sample634(
+    -> p INTEGER NOT NULL,
+    -> a VARCHAR (30),
+    -> CONSTRAINT pkey_sample634 PRIMARY KEY(p)
+    -> );
+Query OK, 0 rows affected (0.617 sec)
+
+mysql> SELECT a,b FROM sample635;
++---+---+
+| a | b |
++---+---+
+| 1 | 1 |
+| 1 | 2 |
+| 1 | 3 |
+| 2 | 1 |
+| 2 | 2 |
++---+---+
+5 rows in set (0.579 sec)
+
+mysql> EXPLAIN SELECT * FROM sample62 WHERE a='a';
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | sample62 | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.384 sec)
+
+mysql> EXPLAIN SELECT * FROM sample62 WHERE no>10;
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | sample62 | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.012 sec)
+
