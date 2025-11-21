@@ -1,0 +1,204 @@
+//ArticleController.java
+package com.example.firstproject.controller;
+
+import com.example.firstproject.repository.ArticleRepository;
+import com.example.firstproject.dto.ArticleForm;
+import com.example.firstproject.entity.Article;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@Slf4j //로깅을 위한 어노테이션 추가
+@Controller
+public class ArticleController {
+    @Autowired
+    private ArticleRepository articleRepository;
+    @GetMapping("/articles/new")
+    public String newArticleForm(){
+        return "articles/new";
+    }
+    @PostMapping("/articles/create")
+    public String createArticle(ArticleForm form){
+        log.info(form.toString());
+        //System.out.println(form.toString());
+        //1. DTO를 엔티티로 변환
+        Article article = form.toEntity();
+        //System.out.println(article.toString());
+        log.info(article.toString());
+        //2. 리파지터리로 엔티티를 DB에 저장
+        Article saved = articleRepository.save(article);
+        //System.out.println(saved.toString());
+        log.info(saved.toString());
+        return "";
+    }
+    @GetMapping("/articles/{id}")
+    public String show(@PathVariable Long id, Model model){
+        log.info("id = " + id);
+        //1. id를 조회해 DB에서 해당 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+        //2. 가져온 데이터를 모델에 등록하기
+        model.addAttribute("article", articleEntity);
+        //3. 조회한 데이터를 사용자에게 보여주기 위한 뷰 페이지를 만들고 반환하기
+        return "articles/show";
+    }
+    @GetMapping("/articles")
+    public String index(Model model){
+        //1. DB에서 모든 Article 데이터 가져오기
+        List<Article> articleEntityList = articleRepository.findAll();
+        //2. 가져온 Article 묶음을 모델에 등록하기
+        model.addAttribute("articleList",articleEntityList);
+        //3. 사용자에게 보여줄 뷰 페이지 설정하기
+        return "articles/index";
+    }
+}
+
+
+//ArticleForm.java
+package com.example.firstproject.dto;
+
+import com.example.firstproject.entity.Article;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
+@AllArgsConstructor
+@ToString
+public class ArticleForm {
+    private String title;
+    private String content;
+
+    public Article toEntity() {
+        return new Article(null, title, content);
+
+    }
+}
+
+//Article.java
+package com.example.firstproject.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@AllArgsConstructor
+@NoArgsConstructor //기본 생성자 추가 어노테이션
+@ToString
+@Entity
+public class Article {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column
+    private String title;
+    @Column
+    private String content;
+}
+
+
+//ArticleRepository
+package com.example.firstproject.repository;
+
+import com.example.firstproject.entity.Article;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.ArrayList;
+
+public interface ArticleRepository extends CrudRepository<Article, Long> {
+    @Override
+    ArrayList<Article> findAll();
+}
+
+//show.mustache
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#article}}
+    <tr>
+        <th>{{id}}</th>
+        <td>{{title}}</td>
+        <td>{{content}}</td>
+    </tr>
+    {{/article}}
+    </tbody>
+</table>
+{{>layouts/footer}}
+
+
+//index.mustache
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#articleList}}
+        <tr>
+            <th>{{id}}</th>
+            <td>{{title}}</td>
+            <td>{{content}}</td>
+        </tr>
+    {{/articleList}}
+    </tbody>
+</table>
+{{>layouts/footer}}
+
+//build.gradle
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.6'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+description = 'Demo project for Spring Boot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
