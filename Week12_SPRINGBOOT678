@@ -1,0 +1,307 @@
+//ArticleController.java
+package com.example.firstproject.controller;
+
+import com.example.firstproject.repository.ArticleRepository;
+import com.example.firstproject.dto.ArticleForm;
+import com.example.firstproject.entity.Article;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@Slf4j //로깅을 위한 어노테이션 추가
+@Controller
+public class ArticleController {
+    @Autowired
+    private ArticleRepository articleRepository;
+    @GetMapping("/articles/new")
+    public String newArticleForm(){
+        return "articles/new";
+    }
+    @PostMapping("/articles/create")
+    public String createArticle(ArticleForm form){
+        log.info(form.toString());
+        //System.out.println(form.toString());
+        //1. DTO를 엔티티로 변환
+        Article article = form.toEntity();
+        //System.out.println(article.toString());
+        log.info(article.toString());
+        //2. 리파지터리로 엔티티를 DB에 저장
+        Article saved = articleRepository.save(article);
+        //System.out.println(saved.toString());
+        log.info(saved.toString());
+        return "redirect:/articles/"+saved.getId();  //리다이렉트 작성
+    }
+    @GetMapping("/articles/{id}")
+    public String show(@PathVariable Long id, Model model){
+        log.info("id = " + id);
+        //1. id를 조회해 DB에서 해당 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+        //2. 가져온 데이터를 모델에 등록하기
+        model.addAttribute("article", articleEntity);
+        //3. 조회한 데이터를 사용자에게 보여주기 위한 뷰 페이지를 만들고 반환하기
+        return "articles/show";
+    }
+    @GetMapping("/articles")
+    public String index(Model model){
+        //1. DB에서 모든 Article 데이터 가져오기
+        List<Article> articleEntityList = articleRepository.findAll();
+        //2. 가져온 Article 묶음을 모델에 등록하기
+        model.addAttribute("articleList",articleEntityList);
+        //3. 사용자에게 보여줄 뷰 페이지 설정하기
+        return "articles/index";
+    }
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id, Model model){
+        //수정할 데이터 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+        //모델에 데이터 등록하기
+        model.addAttribute("article", articleEntity);
+        //뷰 페이지 설정하기
+        return "articles/edit";
+    }
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form){
+        log.info(form.toString());
+//        1. DTO를 엔티티로 변환하기
+        Article articleEntity = form.toEntity();
+        log.info(articleEntity.toString());
+//        2. 엔티티를 DB에 저장하기
+        // 2-1. DB에서 기존 데이터 가져오기
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+        // 2-2. 기존 데이터 값을 갱신하기
+        if (target != null){
+            articleRepository.save(articleEntity);
+        }
+//        3. 수정 결과 페이지로 리다이렉트하기
+        return "redirect:/articles/"+articleEntity.getId();
+    }
+    @GetMapping("/articles/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes rttr){
+        log.info("삭제 요청이 들어왔습니다!");
+        // 1. 삭제할 대상 가져오기
+        Article target = articleRepository.findById(id).orElse(null);
+        log.info(target.toString());
+        // 2. 대상 엔티티 삭제하기
+        if (target != null){
+            articleRepository.delete(target);
+            rttr.addAttribute("msg", "삭제됐습니다!");
+        }
+        // 3. 결과 페이지로 리다이렉트하기
+        return "redirect:/articles";
+    }
+}
+
+
+//ArticleForm.java
+package com.example.firstproject.dto;
+
+import com.example.firstproject.entity.Article;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
+@AllArgsConstructor
+@ToString
+public class ArticleForm {
+    private Long id;
+    private String title;
+    private String content;
+
+    public Article toEntity() {
+        return new Article(id, title, content);
+
+    }
+}
+
+
+//Article.java
+package com.example.firstproject.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@AllArgsConstructor
+@NoArgsConstructor //기본 생성자 추가 어노테이션
+@ToString
+@Entity
+@Getter
+public class Article {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column
+    private String title;
+    @Column
+    private String content;
+
+}
+
+//edit.mustache
+{{>layouts/header}}
+{{#article}}
+<form class="container" action="/articles/update" method="post">
+    <input name="id" type="hidden" value="{{id}}">
+    <div class="mb-3">
+        <label class="form-label">제목</label>
+        <input type="text" class="form-control" name="title" value="{{title}}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">내용</label>
+        <textarea class="form-control" rows="3" name="content">{{content}}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/articles/{{id}}">Back</a>
+</form>
+{{/article}}
+{{>layouts/footer}}
+
+//index.mustache
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#articleList}}
+        <tr>
+            <th>{{id}}</th>
+            <td><a href="/articles/{{id}}">{{title}}</a></td>
+            <td>{{content}}</td>
+        </tr>
+    {{/articleList}}
+    </tbody>
+</table>
+<a href="/articles/new">New Article</a>
+{{>layouts/footer}}
+
+//new.mustache
+{{>layouts/header}}
+<form class="container" action="/articles/create" method="post">
+    <div class="mb-3">
+        <label class="form-label">제목</label>
+        <input type="text" class="form-control" name="title">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">내용</label>
+        <textarea class="form-control" rows="3" name="content"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="/articles">Back</a>
+</form>
+
+{{>layouts/footer}}
+
+//show.mustache
+{{>layouts/header}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">Handle</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#article}}
+    <tr>
+        <th>{{id}}</th>
+        <td>{{title}}</td>
+        <td>{{content}}</td>
+    </tr>
+    {{/article}}
+    </tbody>
+</table>
+<a href="/articles/{{article.id}}/edit" class="btn btn-primary">Edit</a>
+<a href="/articles/{{article.id}}/delete" class="btn btn-danger">Delete</a>
+<a href="/articles">Go to Article List</a>
+{{>layouts/footer}}
+
+
+//header.mustache
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+<!-- navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{{#msg}}
+<div class="alert alert-primary alert-dismissible">
+    {{msg}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"
+            aria-label="Close"></button>
+</div>
+{{/msg}}
+
+//application.properties
+spring.application.name=firstproject
+spring.h2.console.enabled=true
+spring.jpa.defer-datasource-initialization=true
+
+//data.sql
+INSERT INTO article(id, title, content) VALUES(1, '가가가가', '1111');
+INSERT INTO article(id, title, content) VALUES(2, '나나나나', '2222');
+INSERT INTO article(id, title, content) VALUES(3, '다다다다', '3333');
