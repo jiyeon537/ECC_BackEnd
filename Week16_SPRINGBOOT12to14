@@ -1,0 +1,167 @@
+@Service  //서비스 객체 선언
+public class ArticleService {
+	@Autowired
+    private ArticleRepository articleRepository; //게시글 리파지터리 객체 주입
+}
+
+@GetMapping("/api/articles")
+public List<Article> index() {
+	return articleService.index();
+}
+
+public List<Article> index() {
+	return articleRepository.findAll();
+}
+
+@GetMapping("/api/articles/{id}")
+public Article show(@PathVariable Lond id) {
+	return articleService.show(id);
+}
+
+return (create != null) ? good : bad;
+
+public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody ArticleForm dto) {
+	Article updated = articleService.update(id.dto);
+	return (updated != null) ?
+		ResponseEntity.status(HttpStatus.OK).body(updated) :
+    	ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+}
+
+public ResponseEntity<Article> delete(@PathVariable Long id) {
+	Article deleted = articleService.deleted(id.dto);
+	return (deleted != null) ?
+		ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
+    	ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+}
+
+@PostMapping("/api/transaction-test")
+public ResponseEntity<List<Article>> transactionTest
+	(@RequestBody List<ArticleForm> dtos) {}
+
+@PostMapping("/api/transaction-test")
+public ResponseEntity<List<Article>> transactionTest
+	(@RequestBody List<ArticleForm> dtos) {
+    	List<Article> createdList = articleService.createArticles(dtos);
+		return (createdList != null) ?
+			ResponseEntity.status(HttpStatus.OK).body(createdList) :
+    		ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+List<Article> articleList = dtos.stream()
+	.map(dto -> dto.toEntity())
+    .collect(Collectors.toList());
+
+articleList.stream()
+	.forEach(article -> articleRepository.save(article));
+
+articleRepository.findById(-1L)
+	.orElseThrow(() -> new IllegalArgumentException("결제 실패!");
+
+return articleList;
+
+
+Article a = new Article(1L, "가가가가", "1111");
+Article b = new Article(2L, "나나나나", "2222");
+Article c = new Article(3L, "다다다다", "3333");
+
+List<Article> articles = articleService.index();
+
+assertEquals(expected.toString(), articles.toString());
+
+Article c = new Article(4L, "다다다다", "3333");
+
+@Test
+void show_성공_존재하는_id_입력() {
+	// 1. 예상 데이터
+    Long id = 1L;
+    Article expected = new Article(id, "가가가가", "1111");
+    // 2. 실제 데이터
+    Article article = articleService.show(id);
+    // 3. 비교 및 검증
+    assertEquals(expected.toString(), article.toString());
+
+@Test
+void show_실패_존재하지_않는_id_입력() {
+	// 1. 예상 데이터
+    Long id = -1L;
+    Article expected = null;
+    // 2. 실제 데이터
+    Article article = articleService.show(id);
+    // 3. 비교 및 검증
+    assertEquals(expected, article);
+
+@Test
+void create_성공_title과_content만_있는_dto_입력() {
+	// 1. 예상 데이터
+    String title = "라라라라";
+    String content = "4444";
+    ArticleForm dto = new ArticleForm(null, title, content);
+    Article expected = new Article(4L, title, content);
+    // 2. 실제 데이터
+    Article article = articleService.create(dto);
+    // 3. 비교 및 검증
+    assertEquals(expected.toString(), article.toString());
+}
+
+@Test
+void create_실패_id가_포함된_dto_입력() {
+	// 1. 예상 데이터
+    Long id = 4L;
+    String title = "라라라라";
+    String content = "4444";
+    ArticleForm dto = new ArticleForm(id, title, content);
+    Article expected = null;
+    // 2. 실제 데이터
+    Article article = articleService.create(dto);
+    // 3. 비교 및 검증
+    assertEquals(expected, article);
+}
+
+public class Comment{
+	@Id // 대표키 지정
+    @GeneratedValue(strategy=GenerationType.IDENTITY) // DB가 자동으로 1씩 증가
+	private Long id; // 대표키
+    
+    @ManyToOne // Comment엔티티와 Article엔티티를 다대일 관계로 설정
+    @JoinColumn(name="article_id") // 외래키 생성, Article엔티티의 기본키(id)와 매핑
+    private Article article;
+    
+    @Column
+    private String nickname;
+    @Column
+    private String body;
+}
+
+// 1. article 테이블에 데이터 추가
+INSERT INTO article(title, content) VALUES('당신의 인생 영화는?', '댓글 고');
+INSERT INTO article(title, content) VALUES('당신의 소울 푸드는?', '댓글 고고');
+INSERT INTO article(title, content) VALUES('당신의 취미는?', '댓글 고고고');
+
+// 2. 4번 게시글에 댓글 추가
+INSERT INTO comment(article_id, nickname, body) VALUES(4, 'Park', '굿 윌 헌팅');
+INSERT INTO comment(article_id, nickname, body) VALUES(4, 'Kim', '아이 엠 샘');
+INSERT INTO comment(article_id, nickname, body) VALUES(4, 'Choi', '쇼생크 탈출');
+
+// 3. 5번 게시글에 댓글 추가
+INSERT INTO comment(article_id, nickname, body) VALUES(5, 'Park', '치킨');
+INSERT INTO comment(article_id, nickname, body) VALUES(5, 'Kim', '샤브샤브');
+INSERT INTO comment(article_id, nickname, body) VALUES(5, 'Choi', '초밥');
+
+// 4. 6번 게시글에 댓글 추가
+INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Park', '조깅');
+INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Kim', '유튜브 시청');
+INSERT INTO comment(article_id, nickname, body) VALUES(6, 'Choi', '독서');
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {}
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+	//특정 게시글의 모든 댓글 조회
+    @Query(value = "SELECT * FROM comment WHERE 
+    	article_id = :articleId", nativeQuery = true) // value 속성에 실행하려는 쿼리 작성
+    List<Comment> findByArticleId(Long articleId);
+    
+    //특정 닉네임의 모든 댓글 조회
+    List<Comment> findByNickname(String nickname);
+    
+}
+
